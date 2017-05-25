@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:background="@color/skyblue">
+    
+    <TextView
+        android:id="@+id/lessonText"
+        android:name="lessonText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:text="@string/lessonText"
+        android:textSize="20sp"
+        android:textColor="@color/darkblue"
+        android:layout_marginTop="16dp"
+        android:gravity="center"/>
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dip"
+        android:layout_alignParentTop="true"
+        android:background="@color/answerblue"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"/>
+
+
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@color/lightblue"
+        android:divider="@color/darkblue"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"
+        android:dividerHeight="2dip">
+    </ListView>
+
+</LinearLayout>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.iup.flashcard" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.example.towntour.permission.MAPS_RECEIVE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:background="@color/skyblue">
+        <activity
+            android:name="edu.iup.flashcard.manage.ChooseLessonManageActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+
+        <activity
+            android:name="edu.iup.flashcard.quiz.ChooseLessonActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+
+        <activity
+            android:name="edu.iup.flashcard.practice.ChooseDeckActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
+            android:name="edu.iup.flashcard.practice.InitializeCardActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
+            android:name="edu.iup.flashcard.practice.CardActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
+            android:name="edu.iup.flashcard.quiz.InitializeQuestionsActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
+            android:name="edu.iup.flashcard.quiz.ReportCardActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
+            android:name="edu.iup.flashcard.quiz.QuestionActivity"
+            android:label="@string/app_name"
+            />
+        <activity
+            android:name="edu.iup.flashcard.manage.InitializeQuestionsManageActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            />
+        <activity
+            android:name="edu.iup.flashcard.manage.QuestionManageActivity"
+            android:label="@string/app_name"
+            />
+        <activity
+            android:name="edu.iup.flashcard.MenuActivity"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenSize"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+    </application>
+
+</manifest>

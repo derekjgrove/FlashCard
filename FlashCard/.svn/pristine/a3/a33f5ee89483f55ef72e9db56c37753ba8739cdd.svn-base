@@ -1,0 +1,33 @@
+package edu.iup.flashcard.quiz;
+
+import java.util.LinkedList;
+import java.util.List;
+
+
+
+public class QuestionSingleton {
+    private static QuestionSingleton mInstance = null;
+    private LinkedList<Question> questions;
+
+    private String mString;
+
+    /**
+     * Constructor for QuestionSingleton.java
+     */
+    private QuestionSingleton() {
+        questions = new LinkedList<Question>();
+
+    }
+
+    public static QuestionSingleton getInstance() {
+        if (mInstance == null) {
+            mInstance = new QuestionSingleton();
+        }
+        return mInstance;
+    }
+
+    public LinkedList<Question> getQuestions() {
+        return questions;
+    }
+
+}

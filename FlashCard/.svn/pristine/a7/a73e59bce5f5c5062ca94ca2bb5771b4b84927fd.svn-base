@@ -1,0 +1,228 @@
+package edu.iup.flashcard.practice;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.SoundEffectConstants;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ViewSwitcher;
+
+import edu.iup.flashcard.R;
+
+/**
+ * This Fragment represents a question and its user interface. It is controlled by the hosting QuestionActivity.
+ * This Fragment does not have access to any of the Questions or UserAnswers directly. They are passed one at a time
+ * by the hosting activity.
+ *
+ */
+public class CardFragment extends Fragment {
+    // private LinkedList<UserAnswer> userAnswers;
+    private ImageView cardImage;
+    private ImageView nextButton;
+    private ImageView prevButton;
+    private ImageView flipButton;
+    // member variable for selected answer
+
+    // reference to a question for the view to draw
+    private Card card;
+    private Activity hostingActivity;
+    private ImageView audioButton;
+
+    @Override
+    //when the QuestionFragment is first loaded by QuestionActivity, set question = the Question object designated
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.hostingActivity = activity;
+        card = ((CardActivity) activity).getCurrentQuestion();
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_card, parent, false);
+
+        // set the text as "Lesson #" + the lesson number (obtained from preferences)
+        SharedPreferences sp = hostingActivity.getSharedPreferences(ChooseDeckActivity.SHARED_PREFERENCES_KEY, Context.MODE_PRIVATE);
+        int lessonNum = sp.getInt(ChooseDeckActivity.SELECTED_LESSON_KEY, 0);
+        // set image of question here from Question object
+        Bitmap bmp = BitmapFactory.decodeByteArray(card.getImage(), 0,
+                card.getImage().length);
+        cardImage = (ImageView) v.findViewById(R.id.cardImage);
+
+        //I think this is where the picture magically resizes based on how much screen is available
+        cardImage.setAdjustViewBounds(true);
+        cardImage.setImageBitmap(bmp);
+
+
+
+        flipButton = (ImageView) v.findViewById(R.id.flipCard);
+        flipButton.setOnTouchListener(new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                flipButton.setImageResource(R.drawable.ic_flip);
+                            }
+                        }, 250);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        flipButton.setImageResource(R.drawable.ic_flip_clicked);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        prevButton = (ImageView) v.findViewById(R.id.prevButton);
+        prevButton.setOnTouchListener(new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        prevButton.playSoundEffect(SoundEffectConstants.CLICK);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                prevButton.setImageResource(R.drawable.ic_leftarrow);
+                                ((CardActivity) hostingActivity).previousCard();
+                            }
+                        }, 250);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        prevButton.setImageResource(R.drawable.ic_leftarrow_filled);
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+
+        nextButton = (ImageView) v.findViewById(R.id.nextButton);
+        nextButton.setOnTouchListener(new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        nextButton.playSoundEffect(SoundEffectConstants.CLICK);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                nextButton.setImageResource(R.drawable.ic_rightarrow);
+
+                                ((CardActivity) hostingActivity).nextCard();
+                            }
+                        }, 250);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        nextButton.setImageResource(R.drawable.ic_rightarrow_filled);
+                        break;
+                }
+                return false;
+            }
+        });
+
+
+        audioButton = (ImageView) v.findViewById(R.id.soundButton);
+        audioButton.setOnTouchListener(new View.OnTouchListener(){
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN :
+                        audioButton.playSoundEffect(SoundEffectConstants.CLICK);
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                audioButton.setImageResource(R.drawable.ic_playaudio);
+                                try {
+                                    File tempFile = File.createTempFile("questionAudio", "WAV");
+                                    tempFile.deleteOnExit();
+                                    FileOutputStream fos = new FileOutputStream(tempFile);
+                                    fos.write(card.getAudio());
+                                    fos.close();
+                                    MediaPlayer player = new MediaPlayer();
+                                    FileInputStream fis = new FileInputStream(tempFile);
+                                    player.setDataSource(fis.getFD());
+                                    player.prepare();
+                                    player.start();
+                                } catch (IOException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 250);
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        audioButton.setImageResource(R.drawable.ic_playaudio_filled);
+                        break;
+                }
+                return false;
+            }
+        });
+
+        return v;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+/*
+    public void reveal(View v) {
+       Toast.makeText(v.getContext(), (String)card.getCorrectAnswer(), Toast.LENGTH_SHORT).show();
+    }
+*/
+
+}
+

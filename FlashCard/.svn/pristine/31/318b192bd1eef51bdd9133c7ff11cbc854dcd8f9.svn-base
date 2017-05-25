@@ -1,0 +1,129 @@
+package edu.iup.flashcard.quiz;
+
+import java.util.LinkedList;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.method.ScrollingMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
+
+import edu.iup.flashcard.R;
+
+/**
+ * Final activity to provide user feedback on performance.
+ *
+ *
+ *
+ */
+public class ReportCardActivity extends Activity {
+    //member variables for singletons
+    private UserAnswer[] userAnswers;
+    private LinkedList<Question> questions;
+    private int incorrectCount;
+    private int correctCount;
+    private int questionCount;
+    private int score;
+    private char grade;
+    private TextView answerSummaryText;
+    private Button returnButton;
+
+
+
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_reportcard);
+        userAnswers = UserAnswerSingleton.getInstance().getUserAnswers(); //retrieve array of UserAnswers
+        questions = QuestionSingleton.getInstance().getQuestions();		  //retrieve list of Questions
+        String [] questionSet = new String[50];
+
+        answerSummaryText = (TextView) findViewById(R.id.answerSummary);
+
+        //count questions and number correct
+        for(int i = 0; i < userAnswers.length; i++){
+            if(userAnswers[i].getAnswerNumber()==questions.get(i).getcAnswer()){
+                correctCount++;
+                questionSet[i] = "Correct";
+            }
+            if(userAnswers[i].getAnswerNumber()!=questions.get(i).getcAnswer()){
+                incorrectCount++;
+                questionSet[i] = "Wrong";
+            }
+            questionCount++;
+        }
+
+        //calculate and output score
+        score = 100 * correctCount / questionCount;
+        if(score > 90){
+            grade = 'A';
+        }
+        if(score > 80){
+            grade = 'B';
+        }
+        if(score > 70){
+            grade = 'C';
+        }
+        if(score > 60){
+            grade = 'D';
+        }
+        else{
+            grade = 'F';
+        }
+
+        answerSummaryText.setText("\n\nYou obtained the grade " + grade + " in this lesson"
+                + "\nYou have a score of " + score + "%"
+                + "\nQuestions answered correctly: " + correctCount
+                + "\nQuestions answered incorrectly: " + incorrectCount +"\n\n\n");
+
+
+        for (int i = 0; i < questionCount; i++) {
+            String text = "";
+            if (questionSet[i] == "Correct") {
+                Spannable word = new SpannableString("Question #" + i);
+                word.setSpan(new ForegroundColorSpan(Color.WHITE), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                answerSummaryText.append(word);
+                Spannable wordTwo = new SpannableString(questionSet[i]);
+                wordTwo.setSpan(new ForegroundColorSpan(Color.GREEN), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                answerSummaryText.append(" " + wordTwo + "\n");
+                //text = "<font color=#ffffff>Question #" + i + "</font> <font color=#45fc7d>" + questionSet[i] + "</font>";
+            } else {
+                Spannable word = new SpannableString("Question #" + i);
+                word.setSpan(new ForegroundColorSpan(Color.WHITE), 0, word.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                answerSummaryText.append(word);
+                Spannable wordTwo = new SpannableString(questionSet[i]);
+                wordTwo.setSpan(new ForegroundColorSpan(Color.RED), 0, wordTwo.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                answerSummaryText.append(" " + wordTwo + "\n");
+                //text = "<font color=#ffffff>Question #" + i + "</font> <font color=#f45555>" + questionSet[i] + "</font>";
+            }
+            //answerSummaryText.append(Html.fromHtml(text) + "\n");
+        }
+        answerSummaryText.setTextSize(14);
+        answerSummaryText.setMovementMethod(new ScrollingMovementMethod());
+
+        //offers a button to go back to lesson menu, clearing the userAnswers array and questions list
+        returnButton = (Button) findViewById(R.id.reportCardReturnButton);
+        returnButton.setOnClickListener(new OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                for(int i = 0; i<userAnswers.length; i++){
+                    userAnswers[i] = null;
+                }
+                questions.clear();
+                Intent intent = new Intent(ReportCardActivity.this, ChooseLessonActivity.class);
+                startActivity(intent);
+
+            }
+
+        });
+
+    }
+}

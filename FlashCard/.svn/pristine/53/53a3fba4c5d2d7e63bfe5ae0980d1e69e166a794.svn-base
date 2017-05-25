@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/skyblue" >
+
+    <TextView
+        android:id="@+id/summaryPrompt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Summary of answers"
+        android:textSize="25dp" 
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/answerSummary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" 
+        android:textColor="#FFFFFF"/>
+
+    <Button
+        android:id="@+id/reportCardReturnButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Lessons" 
+        android:background="#a2a5a4"
+        android:textColor="#FFFFFF"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
+    
+    <!-- frame layout to host a fragment -->
+
+</LinearLayout>

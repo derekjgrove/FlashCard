@@ -1,0 +1,7 @@
+package edu.iup.flashcard.practice;
+
+import android.app.Fragment;
+
+public class CardFragment extends Fragment {
+
+}

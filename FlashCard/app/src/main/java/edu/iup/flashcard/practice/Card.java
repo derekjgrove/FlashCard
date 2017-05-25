@@ -1,0 +1,82 @@
+package edu.iup.flashcard.practice;
+
+import java.io.Serializable;
+
+/**
+ * Representation of a card.
+ *
+ * @since 2015
+ * @author Derek J. Grove & Team
+ */
+public class Card implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private String qText;
+    private String correctAnswer;
+    private int qNumber;
+    private byte[] image;
+    private byte[] audio;
+
+    public byte[] getAudio() {
+        return audio;
+    }
+
+    public void setAudio(byte[] audio) {
+        this.audio = audio;
+    }
+
+
+    /**
+     * Constructor of Question.java class.
+     * Sets private variables of Question.java equal to parameters of constructor.
+     * Adds correct answer and the three "false" answers to an ArrayList called "answers". The answers ArrayList is shuffled.
+     * Last, int Canswer is set. This integer holds the index of the correct answer in the shuffled answer ArrayList.
+     *
+     * @param qText // String that holds questions
+     * @param correctAnswer // String that stores the correct answer to the question
+     * @param qNumber // integer that holds the question number of the question
+     * @param image // byte[] that stores image associated with question
+     * @param audio // byte[] that stores audio associated with question
+     *
+     */
+    public Card(String qText, String correctAnswer, int qNumber,
+                    byte[] image, byte[] audio) {
+        super();
+        this.qText = qText;
+        this.correctAnswer = correctAnswer;
+        this.qNumber = qNumber;
+        this.image = image;
+        this.audio = audio;
+
+
+    }
+
+    public String getqText() {
+        return qText;
+    }
+
+    public void setqText(String qText) {
+        this.qText = qText;
+    }
+
+    public int getqNumber() {
+        return qNumber;
+    }
+
+    public void setqNumber(int qNumber) {
+        this.qNumber = qNumber;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+}
+

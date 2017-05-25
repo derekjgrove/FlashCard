@@ -1,0 +1,95 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MenuActivity"
+    android:background="@color/skyblue">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/iv_logo"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/manageOption"
+        android:clickable="true"
+        android:src="@drawable/ic_manage"
+        android:soundEffectsEnabled="true"
+        android:layout_marginBottom="37dp"
+        android:layout_marginRight="125dp"
+        android:layout_marginEnd="125dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/quizOption"
+        android:layout_toStartOf="@+id/quizOption" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/quizOption"
+        android:clickable="true"
+        android:src="@drawable/ic_quiz"
+        android:soundEffectsEnabled="true"
+        android:layout_alignTop="@+id/manageOption"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/practiceOption"
+        android:src="@drawable/ic_practice"
+        android:clickable="true"
+        android:soundEffectsEnabled="true"
+        android:layout_alignTop="@+id/quizOption"
+        android:layout_toRightOf="@+id/quizOption"
+        android:layout_toEndOf="@+id/quizOption"
+        android:layout_marginLeft="125dp"
+        android:layout_marginStart="125dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Manage"
+        android:id="@+id/manageText"
+        android:textColor="@color/answerblue"
+        android:textSize="30sp"
+        android:layout_above="@+id/manageOption"
+        android:layout_toLeftOf="@+id/quizOption"
+        android:layout_toStartOf="@+id/quizOption"
+        android:layout_marginRight="109dp"
+        android:layout_marginEnd="109dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Quiz"
+        android:id="@+id/quizText"
+        android:textColor="@color/answerblue"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:layout_above="@+id/quizOption"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Practice"
+        android:id="@+id/practiceText"
+        android:textColor="@color/answerblue"
+        android:textSize="30sp"
+        android:layout_above="@+id/practiceOption"
+        android:layout_toRightOf="@+id/quizOption"
+        android:layout_toEndOf="@+id/quizOption"
+        android:layout_marginLeft="106dp"
+        android:layout_marginStart="106dp" />
+
+</RelativeLayout>

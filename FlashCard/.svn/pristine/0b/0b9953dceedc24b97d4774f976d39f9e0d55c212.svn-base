@@ -1,0 +1,35 @@
+package edu.iup.flashcard.practice;
+
+import java.util.LinkedList;
+
+/**
+ * @since 2015
+ * @author Derek J. Grove & Team
+ */
+//FTW
+public class CardSingleton  {
+    private static CardSingleton mInstance = null;
+    private LinkedList<Card> cards;
+
+    /**
+     * Constructor
+     *
+     *
+     */
+    private CardSingleton()
+    {
+        cards = new LinkedList<Card>();
+    }
+
+    public static CardSingleton getInstance() {
+        if (mInstance == null) {
+            mInstance = new CardSingleton();
+        }
+        return mInstance;
+    }
+
+    public LinkedList<Card> getCards() {
+        return cards;
+    }
+
+}

@@ -1,0 +1,65 @@
+package edu.iup.flashcard.practice;
+
+import java.io.Serializable;
+/**
+ * Representation of a Card
+ * @author Doug
+ *
+ */
+public class Card implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    private String japaneseText;
+    private String englistText;
+    private byte[] image;
+    private byte[] audio;
+
+    public Card(String japaneseText, String englistText, byte[] image,
+                byte[] audio) {
+        super();
+        this.japaneseText = japaneseText;
+        this.englistText = englistText;
+        this.image = image;
+        this.audio = audio;
+    }
+
+    public String getJapaneseText() {
+        return japaneseText;
+    }
+
+    public void setJapaneseText(String japaneseText) {
+        this.japaneseText = japaneseText;
+    }
+
+    public String getEnglistText() {
+        return englistText;
+    }
+
+    public void setEnglistText(String englistText) {
+        this.englistText = englistText;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public byte[] getAudio() {
+        return audio;
+    }
+
+    public void setAudio(byte[] audio) {
+        this.audio = audio;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+}
+
+
+
+
